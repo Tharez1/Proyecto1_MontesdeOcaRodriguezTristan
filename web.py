@@ -26,6 +26,7 @@ class WebRequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    print("Actividad 1")
     print("Starting server")
     server = HTTPServer(("localhost", 8000), WebRequestHandler)
     server.serve_forever()
