@@ -5,17 +5,29 @@ from urllib.parse import parse_qsl, urlparse
 class WebRequestHandler(BaseHTTPRequestHandler):
     def url(self):
         return urlparse(self.path)
-
+    
+    def ruta(self):
+        return self.url().path
+    
     def query_data(self):
         return dict(parse_qsl(self.url().query))
 
     def do_GET(self):
-        archivo = open('home.html')
-        html = archivo.read()
-        self.send_response(200)
-        self.send_header("Content-Type", "text/html")
-        self.end_headers()
-        self.wfile.write(self.get_response().encode("utf-8"))
+        if self.ruta() == "/":
+            archivo_html = open("home.html", "r", encoding="utf-8")
+            html = archivo_html.read()
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.end_headers()
+            self.wfile.write(html.encode("utf-8"))
+
+        if self.valida_autor():
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.end_headers()
+            self.wfile.write(self.get_html(self.ruta(), self.query_data().encode("utf-8")))
+        else:
+            self.send_error(404,'El autor no existe')
 
     def get_html(self, path, qs):
         return f"""
