@@ -2,6 +2,19 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qsl, urlparse
 from sitio import html as content
 
+def get_proyecto(id):
+    if f'/proyecto/{id}' in content:
+        return content[f'/proyecto/{id}']
+    else:
+        return None
+
+def get_home():
+    if '/' in content:
+        return content['/']
+    else:
+        return None
+
+rutas = [(r"/proyecto/<(d+):id>", get_proyecto),(r'/', get_home)]
 class WebRequestHandler(BaseHTTPRequestHandler):
     def url(self):
         return urlparse(self.path)
