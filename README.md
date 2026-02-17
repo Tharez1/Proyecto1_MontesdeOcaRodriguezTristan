@@ -46,7 +46,7 @@ de la ruta y query string de la petición. Por ejemplo para esta petición en
 curl:
 
 ```bash
-curl http://localhost:8080/proyecto/web-uno?autor=luis
+curl http://localhost:8000/proyecto/web-uno?autor=Tristan
 ```
 
 El servidor debería dar como respuesta:
