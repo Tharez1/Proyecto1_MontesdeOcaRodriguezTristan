@@ -20,6 +20,7 @@ class WebRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-Type', 'text/html')
             self.end_headers()
             self.wfile.write(html.encode("utf-8"))
+            return
 
         if self.valida_autor():
             self.send_response(200)
@@ -29,16 +30,16 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404,'El autor no existe')
 
-    def get_html(self, path, qs):
-        return f"""
-        <h1>Proyecto {path} Autor: {qs['autor']}</h1>
-"""
     def valida_autor(self):
         if 'autor' in self.query_data():
             return True
         else:
             return False
         
+    def get_html(self, path, qs):
+        return f"""
+        <h1>Proyecto {path} Autor: {qs['autor']}</h1>
+"""
     def get_response(self):
         return f"""
     <h1> Proyecto: web-uno Autor: Tristan </h1>
